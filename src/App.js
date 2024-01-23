@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import Chart from "./Chart";
 
 function App() {
   const [jsonData, setJsonData] = useState([]);
@@ -13,9 +14,14 @@ function App() {
   }, []);
 
   return (
+
+    
     <div className="App">
+
       <header className="App-header">
         <h1>Données JSON</h1>
+
+        <Chart data={jsonData} />
         <table>
           <thead>
             <tr>
@@ -27,8 +33,8 @@ function App() {
             </tr>
           </thead>
           <tbody>
-            {jsonData.map(item => (
-              <tr key={item.close}>
+            {jsonData.map((item, index) => (
+              <tr key={index}>
                 <td>{item.close || 'N/A'}</td>
                 <td>{item.offexchtradevolumeeex || 'N/A'}</td>
                 <td>{item.onexchtradevolumeeex || 'N/A'}</td>
