@@ -1,24 +1,42 @@
-//import logo from './logo.svg';
-//<img src={logo} className="App-logo" alt="logo" />
+import React, { useState, useEffect } from 'react';
 import './App.css';
-import React from 'react'
 
 function App() {
+  const [jsonData, setJsonData] = useState([]);
+
+  useEffect(() => {
+ 
+    fetch('/data/YF19_2015.json') 
+      .then(response => response.json())
+      .then(data => setJsonData(data.results.items))
+      .catch(error => console.error('Erreur lors du chargement du JSON:', error));
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
-        
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1>Données JSON</h1>
+        <table>
+          <thead>
+            <tr>
+
+              <th>Close</th>
+              <th>Off Exchange Trade Volume EEX</th>
+              <th>On Exchange Trade Volume EEX</th>
+              <th>Trade date time GMT</th>
+            </tr>
+          </thead>
+          <tbody>
+            {jsonData.map(item => (
+              <tr key={item.close}>
+                <td>{item.close || 'N/A'}</td>
+                <td>{item.offexchtradevolumeeex || 'N/A'}</td>
+                <td>{item.onexchtradevolumeeex || 'N/A'}</td>
+                <td>{item.tradedatetimegmt}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </header>
     </div>
   );
